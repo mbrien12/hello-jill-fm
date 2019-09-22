@@ -5,6 +5,8 @@ import Header from "./Header";
 import Home from "./Home"
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
+import mixesData from '../data/mixes'
+
 const Archive = () => <h1>Archive</h1>;
 const About = () => <h1>About</h1>;
 
@@ -13,9 +15,28 @@ class App extends Component {
     super(props)
     this.state = {
       playing: false,
-      currentMix: ''
+      currentMix: '',
+      mixIds: mixesData,
+      mix: null,
+      mixes: []
     }
   }
+
+  fetchMixes = async () => {
+    const {mixIds} = this.state
+    mixIds.map(async id => {
+      try {
+        const response = await fetch(`https://api.mixcloud.com${id}`)
+        const data = await response.json()
+        this.setState((prevState, props) => ({
+          mixes: [...prevState.mixes, data]
+        }))
+      } catch (error) {
+        console.log(error)
+      }
+    })
+  }
+
   mountAudio = async () => {
     this.widget = Mixcloud.PlayerWidget(this.player);
     await this.widget.ready;
@@ -51,6 +72,7 @@ class App extends Component {
 
   componentDidMount() {
     this.mountAudio();
+    this.fetchMixes();
   }
 
   render() {
@@ -62,9 +84,6 @@ class App extends Component {
             <div className="w-50-l relative z-1">
               <Header />
               <div>
-                {/* <button onClick={this.togglePlay}>
-                  {this.state.playing ? 'Pause' : 'Play '}
-                </button> */}
               </div>
               <div>
               </div>
