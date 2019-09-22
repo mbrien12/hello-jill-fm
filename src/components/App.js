@@ -2,40 +2,40 @@
 import React, { Component } from "react";
 import FeaturedMix from "./FeaturedMix";
 import Header from "./Header";
-import Home from "./Home"
+import Home from "./Home";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import mixesData from '../data/mixes'
+import mixesData from "../data/mixes";
 
 const Archive = () => <h1>Archive</h1>;
 const About = () => <h1>About</h1>;
 
 class App extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       playing: false,
-      currentMix: '',
+      currentMix: "",
       mixIds: mixesData,
       mix: null,
       mixes: []
-    }
+    };
   }
 
   fetchMixes = async () => {
-    const {mixIds} = this.state
+    const { mixIds } = this.state;
     mixIds.map(async id => {
       try {
-        const response = await fetch(`https://api.mixcloud.com${id}`)
-        const data = await response.json()
+        const response = await fetch(`https://api.mixcloud.com${id}`);
+        const data = await response.json();
         this.setState((prevState, props) => ({
           mixes: [...prevState.mixes, data]
-        }))
+        }));
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    })
-  }
+    });
+  };
 
   mountAudio = async () => {
     this.widget = Mixcloud.PlayerWidget(this.player);
@@ -44,12 +44,12 @@ class App extends Component {
       this.setState({
         playing: false
       })
-    )
+    );
     this.widget.events.play.on(() =>
       this.setState({
         playing: true
       })
-    )
+    );
   };
 
   actions = {
@@ -57,18 +57,18 @@ class App extends Component {
       this.widget.togglePlay();
     },
     playMix: mixName => {
-      const {currentMix} = this.state
+      const { currentMix } = this.state;
 
-      if(mixName === currentMix) {
-        return this.widget.togglePlay()
+      if (mixName === currentMix) {
+        return this.widget.togglePlay();
       }
       this.setState({
         currentMix: mixName
-      })
+      });
       this.widget.load(mixName, true);
-      this.mountAudio()
+      this.mountAudio();
     }
-  }
+  };
 
   componentDidMount() {
     this.mountAudio();
@@ -76,18 +76,21 @@ class App extends Component {
   }
 
   render() {
+    const [firstMix = {}] = this.state.mixes;
     return (
       <Router>
         <div>
           <div className="flex-l justify-end">
-            <FeaturedMix />
+            <FeaturedMix {...this.state} {...this.actions} {...firstMix} id={firstMix.key} />
             <div className="w-50-l relative z-1">
               <Header />
-              <div>
-              </div>
-              <div>
-              </div>
-              <Route exact path="/" component={() => <Home {...this.state} {...this.actions} />}></Route>
+              <div></div>
+              <div></div>
+              <Route
+                exact
+                path="/"
+                component={() => <Home {...this.state} {...this.actions} />}
+              ></Route>
               <Route path="/archive" component={Archive} />
               <Route path="/about" component={About} />
             </div>
