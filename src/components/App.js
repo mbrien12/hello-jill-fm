@@ -31,20 +31,27 @@ class App extends Component {
     )
   };
 
+  actions = {
+    togglePlay: () => {
+      this.widget.togglePlay();
+    },
+    playMix: mixName => {
+      const {currentMix} = this.state
+
+      if(mixName === currentMix) {
+        return this.widget.togglePlay()
+      }
+      this.setState({
+        currentMix: mixName
+      })
+      this.widget.load(mixName, true);
+      this.mountAudio()
+    }
+  }
+
   componentDidMount() {
     this.mountAudio();
   }
-
-  togglePlay = () => {
-    this.widget.togglePlay();
-  };
-
-  playMix = mixName => {
-    this.setState({
-      currentMix: mixName
-    })
-    this.widget.load(mixName, true);
-  };
 
   render() {
     return (
@@ -61,7 +68,7 @@ class App extends Component {
               </div>
               <div>
               </div>
-              <Route exact path="/" component={Home} />
+              <Route exact path="/" component={() => <Home {...this.state} {...this.actions} />}></Route>
               <Route path="/archive" component={Archive} />
               <Route path="/about" component={About} />
             </div>
