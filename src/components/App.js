@@ -3,12 +3,11 @@ import React, { Component } from "react";
 import FeaturedMix from "./FeaturedMix";
 import Header from "./Header";
 import Home from "./Home";
+import Archive from "./Archive";
+import About from "./About";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import mixesData from "../data/mixes";
-
-const Archive = () => <h1>Archive</h1>;
-const About = () => <h1>About</h1>;
 
 class App extends Component {
   constructor(props) {
@@ -81,7 +80,12 @@ class App extends Component {
       <Router>
         <div>
           <div className="flex-l justify-end">
-            <FeaturedMix {...this.state} {...this.actions} {...firstMix} id={firstMix.key} />
+            <FeaturedMix
+              {...this.state}
+              {...this.actions}
+              {...firstMix}
+              id={firstMix.key}
+            />
             <div className="w-50-l relative z-1">
               <Header />
               <div></div>
@@ -89,10 +93,16 @@ class App extends Component {
               <Route
                 exact
                 path="/"
-                component={() => <Home {...this.state} {...this.actions} />}
+                render={() => <Home {...this.state} {...this.actions} />}
               ></Route>
-              <Route path="/archive" component={Archive} />
-              <Route path="/about" component={About} />
+              <Route
+                path="/archive"
+                render={() => <Archive {...this.state} {...this.actions} />}
+              />
+              <Route
+                path="/about"
+                render={() => <About {...this.state} />}
+              />
             </div>
           </div>
           <iframe
