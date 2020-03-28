@@ -1,5 +1,5 @@
 body {
-  font-family: 'Work Sans', -apple-system, sans-serif;
+  font-family: "Work Sans", -apple-system, sans-serif;
   font-size: 1rem;
   line-height: 1.5;
   color: #5c5c5c;
@@ -13,20 +13,20 @@ body {
 }
 
 .biryani {
-  font-family: 'Biryani', sans-serif;
+  font-family: "Biryani", sans-serif;
 }
 
 .biryani-black {
-  font-family: 'Biryani', sans-serif;
+  font-family: "Biryani", sans-serif;
   font-weight: 900;
 }
 
 .anton {
-  font-family: 'Anton', sans-serif;
+  font-family: "Anton", sans-serif;
 }
 
 .bg-featured {
-  background-image: url('../images/featured-mix.jpg');
+  background-image: url("../images/featured-mix.jpg");
 }
 
 .mix-title {
@@ -38,11 +38,11 @@ body {
 .play-button {
   width: 80px;
   height: 80px;
-  background-image: url('../images/play-button.svg');
+  background-image: url("../images/play-button.svg");
 }
 
 .playing .play-button {
-  background-image: url('../images/pause-button.svg');
+  background-image: url("../images/pause-button.svg");
 }
 
 .archive .play-button {
@@ -82,7 +82,7 @@ body {
 }
 
 .mix-overlay:after {
-  content: '';
+  content: "";
   position: absolute;
   z-index: 1;
   top: 0;
@@ -90,4 +90,12 @@ body {
   width: 100%;
   height: 100%;
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+}
+
+.orange {
+  color: #fd9427;
+}
+
+.lh-1 {
+  line-height: 1;
 }
