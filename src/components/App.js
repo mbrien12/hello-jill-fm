@@ -5,6 +5,7 @@ import Header from "./Header";
 import Home from "./Home";
 import Archive from "./Archive";
 import About from "./About";
+import Show from "./Show";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import mixesData from "../data/mixes";
@@ -99,9 +100,12 @@ class App extends Component {
                 path="/archive"
                 render={() => <Archive {...this.state} {...this.actions} />}
               />
+              <Route path="/about" render={() => <About {...this.state} />} />
               <Route
-                path="/about"
-                render={() => <About {...this.state} />}
+                path="/show/:slug"
+                render={routeParams => (
+                  <Show {...routeParams} {...this.state} />
+                )}
               />
             </div>
           </div>
